@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Fer's Blog</title>
+ <link href="http://localhost:4000/atom.xml" rel="self"/>
+ <link href="http://localhost:4000/"/>
+ <updated>2024-08-12T19:22:47+02:00</updated>
+ <id>http://localhost:4000</id>
+ <author>
+   <name>Fernando Rodriguez</name>
+   <email></email>
+ </author>
+
+ 
+ <entry>
+   <title>Critical Thinking</title>
+   <link href="http://localhost:4000/2024/07/critical-thinking.html"/>
+   <updated>2024-07-15T07:00:00+02:00</updated>
+   <id>http://localhost:4000/2024/07/critical-thinking</id>
+   <content type="html">&lt;p&gt;Whenever someone shows me a new development, the phrase from the
+book &lt;a href=&quot;https://www.oreilly.com/library/view/designing-data-intensive-applications/9781491903063/&quot;&gt;Designing Data-Intensive Applications&lt;/a&gt;,
+which
+states that “even when they have the best intentions, humans are known to be unreliable,” comes to my mind. I start
+thinking about where exceptions can occur.&lt;/p&gt;
+
+&lt;p&gt;The most common errors I typically encounter involve not validating input parameters for APIs, neglecting to use
+try-catch blocks in logic or data access, mishandling transactions, or failing to properly handle events through
+failover.&lt;/p&gt;
+
+&lt;p&gt;In essence, it’s just another way to begin considering potential failure points in your code right from the very
+beginning.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Storage space</title>
+   <link href="http://localhost:4000/2024/05/storage-space.html"/>
+   <updated>2024-05-12T07:00:00+02:00</updated>
+   <id>http://localhost:4000/2024/05/storage-space</id>
+   <content type="html">&lt;p&gt;Over time, you come to realize that image compression is crucial for conserving storage space on the website’s server.
+In some cases, the successful deployment of your website can even depend on it. That’s why I
+appreciate &lt;a href=&quot;https://tinypng.com/&quot;&gt;TinyPNG&lt;/a&gt;. Here’s
+a real example from one of my projects, which involved a multitude of images:&lt;/p&gt;
+
+&lt;p&gt;Before optimization:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/img/pre-compression.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After optimizing three images, which initially had sizes of 2.44 MB, 1.94 MB, and 1.41 MB, respectively:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/img/compression-in-progress.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/img/post-compression.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;And the best part of it all is that you don’t notice any difference in terms of quality.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Interface segregation approach</title>
+   <link href="http://localhost:4000/2024/04/intergace-segregation-approach.html"/>
+   <updated>2024-04-26T07:00:00+02:00</updated>
+   <id>http://localhost:4000/2024/04/intergace-segregation-approach</id>
+   <content type="html">&lt;p&gt;I guess this is an unpopular opinion, but there are two things I consider before creating an interface.&lt;/p&gt;
+
+&lt;p&gt;I don’t create an interface if I only have one implementation in the domain layer initially. I always extract it when I
+have a second one. It doesn’t take much time and effort, and I avoid ending up with a long list of interfaces
+implemented only once.&lt;/p&gt;
+
+&lt;p&gt;I don’t necessarily have a method per interface. Instead, I prefer to delegate the responsibility in the implementation
+when the time comes, by doing something like:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;UserRepository&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findAll&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+
+  &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;DBUserService&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;UserRepository&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findAll&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;UnsupportedOperationException&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;All this, as long as the responsibility remains in the user repository. Otherwise, it would make sense to create a new
+repository with its own actions.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Testing logs</title>
+   <link href="http://localhost:4000/2024/04/testing-logs.html"/>
+   <updated>2024-04-14T07:00:00+02:00</updated>
+   <id>http://localhost:4000/2024/04/testing-logs</id>
+   <content type="html">&lt;p&gt;In my experience, we often overlook the importance of logs, and this is a mistake.&lt;/p&gt;
+
+&lt;p&gt;There are a few things to consider, and one of them is testing logs, just as you would test the output of your services.&lt;/p&gt;
+
+&lt;p&gt;In Spring Boot, for instance, you can easily achieve this by using the “CapturedOutput” object, as demonstrated in the
+following example:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;deposit_shouldLogDepositMessage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CapturedOutput&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        
+            &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Double&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;depositAmount&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;50.00&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+            &lt;span class=&quot;n&quot;&gt;accountService&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;deposit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;userId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;initialBalance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;depositAmount&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+            &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;logOutput&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getOut&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+
+            &lt;span class=&quot;nc&quot;&gt;Assertions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;assertAll&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;
+                    &lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Assertions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;assertTrue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;logOutput&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;contains&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;INFO&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)),&lt;/span&gt;
+                    &lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Assertions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;assertTrue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;logOutput&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;contains&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;userId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)),&lt;/span&gt;
+                    &lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Assertions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;assertTrue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;logOutput&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;contains&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;valueOf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;depositAmount&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))),&lt;/span&gt;
+                    &lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Assertions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;assertTrue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;logOutput&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;contains&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;LocalDate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;now&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;toString&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()))&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>The <del>senior</del> good developer</title>
+   <link href="http://localhost:4000/2024/03/the-good-developer.html"/>
+   <updated>2024-03-08T06:00:00+01:00</updated>
+   <id>http://localhost:4000/2024/03/the-good-developer</id>
+   <content type="html">&lt;p&gt;I am sure that you can identify a good developer if they exhibit the following behaviors:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Dedicate time to review pull requests&lt;/strong&gt;, catching errors that are likely to emerge in production. Additionally, they propose potential solutions to the problems. Personally, I see this as a valuable time investment. It helps me gain an understanding of how the new functionality is being built, making it easier for me to work on it later. If I have any questions about the technical solution, I will ask them or quickly give them a call.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Always be ready to lend a hand&lt;/strong&gt;. No matter what you ask for, they will always say yes (it doesn’t always have to be immediate, we all have our timelines and duties). Moreover, if they don’t know something, you’ll hear something like “I have no idea, but we will figure it out together.” I consider this very important, especially when there are junior members involved. After all, we are here to solve problems, not to know all the solutions by heart.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Don’t shy away from tasks that aren’t in their role&lt;/strong&gt;. Here, I’m not only talking about backend or frontend tasks but also looking into production issues, deploying services, or creating documentation.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Lead the development process&lt;/strong&gt;, from creating the necessary subtasks to deploying it into production. They take charge of coordinating branch merging or end-to-end testing if necessary.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Take the time to understand how the business works&lt;/strong&gt; beyond the functionality described in the user story. This allows them to have a global vision of the product, understand the impact of coding changes on the business, and propose long-term improvements for users.&lt;/p&gt;
+
+&lt;p&gt;Remember that a business can operate in many ways, but well-written code will always require an understanding of the context behind it.&lt;/p&gt;
+</content>
+ </entry>
+ 
+
+</feed>

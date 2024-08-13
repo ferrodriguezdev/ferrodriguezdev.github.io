@@ -1,0 +1,40 @@
+# Dependencies
+highlighter: rouge
+
+# Required for backtick highlighting to work in local with jekyll 3.0.3
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+# Permalinks
+permalink: /:year/:month/:title.html
+
+# To have nice summaries on the first page
+excerpt_separator: <!--more-->
+
+# Setup
+title: Fer's Blog
+tagline:
+url: ferrodriguez.dev
+paginate: 10
+analytics_id: UA-75727912-1
+
+# About/contact
+author:
+  name: Fernando Rodriguez
+# email: ferrodriguezdev@gmail.com
+
+# Do not build vendor pages (https://github.com/jekyll/jekyll/issues/2938)
+# Exclude build stuff
+exclude: [vendor, Gemfile, Gemfile.lock, Gruntfile.js, package.json, README.md, node_modules]
+
+# Custom vars
+version: 2.0.0
+github:
+#repo:
+
+# Gems
+plugins:
+  - jekyll-paginate
+  - jekyll-gist
+  - jemoji

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'/>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Interface segregation approach &middot; Fer's Blog
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700%7CAbril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body class="theme-base-0d">
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          Fer's Blog
+        </a>
+      </h1>
+      <p class="lead"></p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <a class="sidebar-nav-item" href="/posts.html">All Posts</a>
+      
+      
+      
+    </nav>
+
+    <!--<p style="font-size: medium"><i>ferrodriguezdev@gmail.com</i></p>-->
+  </div>
+</div>
+
+
+    <div class="content container">
+      <article class="post">
+  <h1 class="post-title">Interface segregation approach</h1>
+  <time datetime="2024-04-26T07:00:00+02:00" class="post-date">26 Apr 2024</time>
+  <p>I guess this is an unpopular opinion, but there are two things I consider before creating an interface.</p>
+
+<p>I don’t create an interface if I only have one implementation in the domain layer initially. I always extract it when I
+have a second one. It doesn’t take much time and effort, and I avoid ending up with a long list of interfaces
+implemented only once.</p>
+
+<p>I don’t necessarily have a method per interface. Instead, I prefer to delegate the responsibility in the implementation
+when the time comes, by doing something like:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserRepository</span> <span class="o">{</span>
+  <span class="nc">List</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="nf">findAll</span><span class="o">();</span>
+
+  <span class="kt">void</span> <span class="nf">save</span><span class="o">(</span><span class="kd">final</span> <span class="nc">User</span> <span class="n">user</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">DBUserService</span> <span class="kd">implements</span> <span class="nc">UserRepository</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="nf">findAll</span><span class="o">()</span> <span class="o">{</span>
+  <span class="o">}</span>
+
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">save</span><span class="o">(</span><span class="kd">final</span> <span class="nc">User</span> <span class="n">user</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nf">UnsupportedOperationException</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>All this, as long as the responsibility remains in the user repository. Otherwise, it would make sense to create a new
+repository with its own actions.</p>
+
+</article>
+
+    </div>
+
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-75727912-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+    
+  </body>
+</html>
